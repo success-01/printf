@@ -1,0 +1,143 @@
+.TH _PRINTF man page 3 "17 September 2023" "Version 0.1"
+.SH NAME
+.B _printf\fR \- re - creation of the printf function
+.SH SYNOPSIS
+.B #include \fB"main.h"
+.B int printf(const char *\fIformat\fB, ...);
+
+.SH DESCRIPTION
+The \fBprintf()\fR function is a standard library function used for formatted output.It allows the user to display text and data on outtput streams while specifying how it should be formatted.
+
+.I RETURN
+.in +2n
+When successful , \fB_printf()\fR returns the number of letters and number printed by the user.If an error is encountered -1 is returned instead.
+.in
+
+.B USAGE 
+
+.B FORMAT FOR FORMAT STRING
+.in +2n
+A format string is a constant character strimg made up  of zero or more 
+directives: ordinary characters (not \fB%\fR) which are copied unchanged to 
+the output stream; and conversion specifications, each of which results in 
+fetching zero or more subsequent arguments. Conversion specification is 
+introduced by the character \fB%\fR and ends with a \fIconversion specifier\fR.
+
+In between the \fB%\fR character and conversion specifier, there may be (in 
+order) zero or more \fIflags\fR, an optional minimum \fIfield width\fR, an 
+optional \fIprecision\fR and an optional \fIlength\fR modifier. The arguments 
+must correspond with the conversion specifier, and are used in the order given.
+
+.B FLAG CHARACTER
+Zero or more of the following flags are what may come after the particular character:
+
+.RS
+.B -
+.in +2n
+The converted value is left-justified, which means it is padded on the right with spaces instead of on the left with spaces or zeroes. This behavior overrides any \fB0\fR flag set for padding."
+.in
+.RE
+
+.RS
+.B 0
+.in +2n
+"When using  \fBd\fR, \fBi\fR, \fBo\fR, \fBu\fR, \fBx\fR, and \fBX\fR conversions, the value is filled with leading zeros instead of spaces. If the \fB0\fR flag is used for numeric conversions with a defined precision, it will have no effect.
+.in
+.RE
+
+.RS
+.B #
+.in +2n
+In For \fBo\fR conversions, a '0' is added as a prefix to the first character of the output string if it's not already '0.' In the case of 'x' and 'X' conversions, '0x' or '0X,' respectively, is prefixed to non-zero numbers.
+.in
+.RE
+
+.RS
+.B +
+.in +2n
+A sign (+ or -) is always placed before a number produced by signed conversion.
+.in
+.RE
+
+.RS
+.B ' '
+.in +2n
+Before a positive number or empty string produced by a signed conversion a blank space is left.
+.in
+.RE
+
+.B CONVERSION SPECIFIERS
+Conversion specifiers are essential for precise control over the formatting of input and output for correct and consistent presentation of data.
+They help match the data type of variables with the way they are read from the input stream, making it possible to create structured and readable input and output in a program
+Here are some conversion specifiers and their functions(They all start with '%' when executed):
+
+.RS
+.B c
+.in +2n
+This is used to print a character. When used argument is converted to an \fIunsigned char\fR.
+.in
+.RE
+
+.RS
+.B d
+.in +2n
+Is used for integers
+.in
+.RE
+
+.RS
+.B b 
+.in +2n
+This is a \fIunsigned int\fR argument and is converted to binary.
+.in
+.RE
+
+.RS
+.B  o, u, x, X
+.in +2n
+The \fIunsigned int\fR argument is converted to unsigned octal (\fBo\fR),unsigned decimal (\fBu\fR), or unsigned hexadecimal (\fBx\fR and \fBX\fR) notation. The letters \fBabcdef\fR are used for \fBx\fR conversions; the letters \fBABCDEF\fR are used for \fBX\fR conversions.
+.in
+.RE
+
+.RS
+.B s
+.in +2n
+The argument \fIconst char *\fR is anticipated to be a pointer to an array of characters, essentially a string. The function writes characters from the array, commencing with the first element and concluding just before encountering the null terminator ('\0')
+.in
+.RE
+
+.RS
+.B S
+.in +2n
+Similar to the \fBS\fR conversion specifier, with the distinction that when encountering non-printable characters within the array (i.e., characters with an ASCII value less than 32 or greater than or equal to 127), they are output as \fB\x\fR followed by the hexadecimal ASCII code value
+.in
+.RE
+
+.RS
+.B %%
+.in +2n
+To print a literal percent sign. 
+.in
+.RE
+
+.RS
+.B r
+.in +2n
+Identical to the \fBs\fR conversion specifier, except characters of array are written in reverse, starting from (but not including) the 
+terminating null byte ('\\0') and ending at the first element of the array.
+.in
+.RE
+
+.RS
+.B R
+.in +2n
+Identical to the \fBs\fR conversion specifier, except each character of the array is converted to its corresponding character in ROT13 before breing written.
+.in
+.RE
+
+.RS
+.B p
+.in +2n
+Address of  argument is written. The address is written in hexadecimal
+.in
+.RE

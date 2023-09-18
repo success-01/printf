@@ -9,12 +9,12 @@
 #include <string.h>
 
 /* Flag Macro Modifiers */
-#define F_NEGATIVE ((flags >> 4) & 1)
+#define F_MINUS ((flags >> 4) & 1)
 #define F_PLUS (flags & 1)
 #define F_ZERO ((flags >> 3) & 1)
 #define F_HASH ((flags >> 2) & 1)
 #define F_SPACE ((flags >> 1) & 1)
-#define NEGATIVE 16
+#define MINUS 16
 #define PLUS 1
 #define ZERO 8
 #define HASH 4
@@ -47,7 +47,7 @@ typedef struct convert_u
 
 {
 	unsigned char specifier;
-	unsigned int (*f)(va_list, buffer_v *, unsingned char,
+	unsigned int (*f)(va_list, buffer_v *, unsigned char,
 			int, int, unsigned char);
 } convert_v;
 
@@ -105,7 +105,7 @@ int _printf(const char *format, ...);
 	unsigned char flags_handler(const char *flags, char *index);
 	unsigned char length_handler(const char *modifier, char *index);
 	unsigned int (*specifiers_handler(const char *specifier))(va_list, buffer_v *,
-			unsinged char flags, int wid);
+			unsigned char flags, int wid);
 	int width_handler(va_list args, const char *modifier, char *index);
 	int precision_handler(va_list args, const char *modifier, char *index);
 

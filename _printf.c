@@ -8,7 +8,7 @@ int _printf(const char *format, ...);
  * @args: Va_list of arguments for _printf.
  * @output: buffer_v struct.
  */
-void clearing(va_list args, buffer_v *output);
+void clearing(va_list args, buffer_v *output)
 {
 	va_end(args);
 	write(1, output->start, output->len);
@@ -22,12 +22,12 @@ void clearing(va_list args, buffer_v *output);
  * @args: arguments for va_list.
  * Return: Amount of characters stored to output.
  */
-int running_printf(const char *format, va_list args, buffer_v *output);
+int running_printf(const char *format, va_list args, buffer_v *output)
 {
 	int x, wid, prec, ret = 0;
 	char tmp;
 	unsigned char flags, len;
-	unsigned int (*f)(va_list, buffer_v *, unsinged char,
+	unsigned int (*h)(va_list, buffer_v *, unsigned char,
 			int, int, unsigned char);
 
 	for (x = 0; *(format + x); x++)
@@ -39,12 +39,12 @@ int running_printf(const char *format, va_list args, buffer_v *output);
 			flags = flags_handler(format + x + 1, &tmp);
 			prec = precision_handler(args, format + x + tmp + 1, &tmp);
 			wid = width_handler(args, format + x + tmp + 1, &tmp);
-			f = specifiers_handler(format + x + tmp + 1);
+			h = specifiers_handler(format + x + tmp + 1);
 		len = length_handler(format + x + tmp + 1, &tmp);
-	if (f != NULL)
+	if (h != NULL)
 	{
 	x += tmp + 1;
-ret += f(args, output, flags, wid, prec, len);
+ret += h(args, output, flags, wid, prec, len);
 continue;
 	}
 	else if (*(format + x + tmp + 1) == '\0')
@@ -53,7 +53,7 @@ continue;
 		break;
 	}
 		}
-		ret += memcopy(output, (format + x), 1);
+		ret += memcpy(output, (format + x), 1);
 		x += (len != 0) ? 1 : 0;
 	}
 	clearing(args, output);

@@ -1,9 +1,9 @@
 #include "main.h"
 
-unsigned int convert_di(va_list ap, buffer_t *output, unsigned char flags, int wid, int prec, unsigned char len);
-unsigned int convert_o(va_list ap, buffer_t *output, unsigned char flags, int wid, int prec, unsigned char len);
-unsigned int convert_u(va_list ap, buffer_t *output, unsigned char flags, int wid, int prec, unsigned char len);
-unsigned int convert_b(va_list ap, buffer_t *output, unsigned char flags, int wid, int prec, unsigned char len);
+unsigned int convert_di(va_list ap, buffer_v *output, unsigned char flags, int wid, int prec, unsigned char len);
+unsigned int convert_o(va_list ap, buffer_v *output, unsigned char flags, int wid, int prec, unsigned char len);
+unsigned int convert_u(va_list ap, buffer_v *output, unsigned char flags, int wid, int prec, unsigned char len);
+unsigned int convert_b(va_list ap, buffer_v *output, unsigned char flags, int wid, int prec, unsigned char len);
 
 /**
  *convert_di - converts argument to signed int and stores arg to buffer contained in struct.
@@ -15,17 +15,17 @@ unsigned int convert_b(va_list ap, buffer_t *output, unsigned char flags, int wi
  *@output:buffer_t structure with char array
  *Return: number of bytes stored to a buffer.
  */
-unsigned int convert_di(va_list ap, buffer_t *output, unsigned char flags, int wid, int prec, unsigned char len);
+unsigned int convert_di(va_list ap, buffer_v *output, unsigned char flags, int wid, int prec, unsigned char len);
 {
 	long int m, copy;
 	unsigned int ret = 0, count = 0;
 	char pad, space = ' ', neg = '-', plus = '+';
 
-	if (len == LONG)
+	if (len == S_LONG)
 		m = va_arg(ap, long int);
 	else
 		m = va_arg(ap, int);
-	if (len == SHORT)
+	if (len == S_SHORT)
 		m = (short)d;
 
 	if (SPACE_FLAG == 1 && m >= 0)
@@ -67,25 +67,25 @@ unsigned int convert_di(va_list ap, buffer_t *output, unsigned char flags, int w
  * @output:buffer_t struct with character array.
  * Return:number of bytes stored to the buffer.
  */
-unsigned int convert_o(va_list ap, buffer_t *output, unsigned char flags, int wid, int prec, unsigned char len)
+unsigned int convert_o(va_list ap, buffer_v *output, unsigned char flags, int wid, int prec, unsigned char len)
 {
-	unsigned long int num;
+	unsigned long int numb;
 	unsigned int ret = 0;
 	char zero = '0';
 
-	if (len == LONG)
-		num = va_arg(ap, unsigned long int);
+	if (len == S_LONG)
+		numb = va_arg(ap, unsigned long int);
 	else
-		num = va_arg(ap, unsigned int);
+		numb = va_arg(ap, unsigned int);
 
-	if (len == SHORT)
-		num = va_arg(unsigned short)num;
+	if (len == S_SHORT)
+		numb = va_arg(unsigned short)numb;
 
-	if (HASH_FLAG == 1 && num != 0)
+	if (HASH_FLAG == 1 && numb != 0)
 		ret += _memcpy(output, &zero, 1);
 
-	if (!(num == 0 && prec == 0))
-		ret += convert_ubase(output, num, "01234567", flags, wid, prec);
+	if (!(numb == 0 && prec == 0))
+		ret += convert_ubase(output, numb, "01234567", flags, wid, prec);
 
 	ret += print_neg_width(output, ret, flags, wid);
 
@@ -102,20 +102,20 @@ unsigned int convert_o(va_list ap, buffer_t *output, unsigned char flags, int wi
  * @output:buffer_t struct with a array of a character type
  * Return:number of bytes store to a buffer
  */
-unsigned int convert_u(va_list ap, buffer_t *output, unsigned char flags, int wid, int prec, unsigned char len)
+unsigned int convert_u(va_list ap, buffer_v *output, unsigned char flags, int wid, int prec, unsigned char len)
 {
 	unsigned long int numb;
 	unsigned int ret = 0;
 
-	if (len == LONG)
+	if (len == S_LONG)
 		numb = va_arg(ap, unsigned long int);
 	else
 		numb = va_arg(ap, unsigned int);
-	if (len == SHORT)
+	if (len == S_SHORT)
 		numb = va_arg(unsigned short)numb;
 
 	if (!(numb == 0 && prec == 0))
-		ret += convert_ubase(output, numb, "0123456789", flags, wid, prec)
+		ret += convert_ubase(output, numb, "0123456789", flags, wid, prec);
 
 	ret += print_neg_width(output, ret, flags, wid);
 
@@ -132,7 +132,7 @@ unsigned int convert_u(va_list ap, buffer_t *output, unsigned char flags, int wi
  * @output:buffer_t struct with an array of a character type
  * Return:number of bytes to store to a buffer
  */
-unsigned int convert_b(va_list ap, buffer_t *output, unsigned char flags, int wid, int prec, unsigned char len)
+unsigned int convert_b(va_list ap, buffer_v *output, unsigned char flags, int wid, int prec, unsigned char len)
 {
 	unsigned int numb;
 

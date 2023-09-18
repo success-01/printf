@@ -67,11 +67,11 @@ int _printf(const char *format, ...);
 	/* Conversion Specifier Function */
 	unsigned int c_convert(va_list args, buffer_v *output, unsigned char flags,
 			int wid, int prec, unsigned char len);
-	unsigned int b_convert(va_list args, buffer_v *output, unsigned char flags,
+	unsigned int b_convert(va_list ap, buffer_v *output, unsigned char flags,
 			int wid, int prec, unsigned char len);
-	unsigned int di_convert(va_list args, buffer_v *output,
+	unsigned int di_convert(va_list ap, buffer_v *output,
 			unsigned char flags, int wid, int prec, unsigned char len);
-	unsigned int o_convert(va_list args, buffer_v *output, unsigned char flags,
+	unsigned int o_convert(va_list ap, buffer_v *output, unsigned char flags,
 			int wid, int prec, unsigned char len);
 	unsigned int s_convert(va_list args, buffer_v *output, unsigned char flags,
 			int wid, int prec, unsigned char len);
@@ -89,7 +89,7 @@ int _printf(const char *format, ...);
 			int wid, int prec, unsigned char len);
 	unsigned int S_convert(va_list args, buffer_v *output,
 			unsigned char flags, int wid, int prec, unsigned char len);
-	unsigned int u_convert(va_list args, buffer_v *output,
+	unsigned int u_convert(va_list ap, buffer_v *output,
 			unsigned char flags, int wid, int prec, unsigned char len);
 
 	/* Modifiers */

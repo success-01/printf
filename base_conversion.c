@@ -2,13 +2,13 @@
 
 unsigned int convert_sbase(buffer_v *output, long int num, char *base,
 		unsigned char flags, int wid, int prec);
-unsigned int convert_ubase(buffer_v*output,
+unsigned int convert_ubase(buffer_v *output,
 		unsigned long int num, char *base,
 		unsigned char flags, int wid, int prec);
 
 /**
- * convert_sbase - Converts a signed long to an inputted base and stores
- *                 the result to a buffer contained in a struct.
+ * sbase_converter - Converts a signed long to an inputted base and stores
+ * the result to a buffer contained in a struct.
  * @output: A buffer_v struct containing a character array.
  * @num: A signed long to be converted.
  * @base: A pointer to a string containing the base to convert to.
@@ -18,7 +18,7 @@ unsigned int convert_ubase(buffer_v*output,
  *
  * Return: The number of bytes stored to the buffer.
  */
-unsigned int convert_sbase(buffer_v *output, long int num, char *base,
+unsigned int sbase_converter(buffer_v *output, long int num, char *base,
 		unsigned char flags, int wid, int prec)
 {
 	int size;
@@ -27,41 +27,42 @@ unsigned int convert_sbase(buffer_v *output, long int num, char *base,
 
 	for (size = 0; *(base + size);)
 		size++;
+
 	if (num >= size || num <= -size)
-	ret += convert_sbase(output, num / size, base,
-		flags, wid - 1, prec - 1);
+		ret += sbase_converter(output, num / size, base,
+				flags, wid - 1, prec - 1);
 
 	else
 	{
-		for (; prec > 1; prec--, wid--)
+		for (; prec > 1; prec--, wid--) /* Handle precision */
 			ret += _memcpy(output, &pad, 1);
 
-		if (NEG_FLAG == 0)
+		if (F_NEG == 0) /* Handle width */
 		{
-			pad = (ZERO_FLAG == 1) ? '0' : ' ';
-				for (; wid > 1; wid--)
-					ret += _memcpy(output, &pad, 1);
+			pad = (F_ZERO == 1) ? '0' : ' ';
+			for (; wid > 1; wid--)
+				ret += _memcpy(output, &pad, 1);
 		}
-
-		digit = base[(num < 0 ? -1 : 1) * (num % size)];
-		_memcpy(output, &digit, 1);
-
-		return (ret);
+	}
+	digit = base[(num < 0 ? -1 : 1) * (num % size)];
+	_memcpy(output, &digit, 1);
+	return (ret);
 }
 
 /**
- * convert_ubase - Converts an unsigned long to an inputted base and
- *                 stores the result to a buffer contained in a struct.
- * @output: A buffer_v struct containing a character array.
+ * ubase_converter - Converts an unsigned long to an inputted base and
+ * stores the result to a buffer contained in a struct.
+ * @output: A buffer_t struct containing a character array.
  * @num: An unsigned long to be converted.
  * @base: A pointer to a string containing the base to convert to.
- * @flags:the Flag modifiers.
- * @wid:the width modifier.
- * @prec:the precision modifier.
+ * @flags: Flag modifiers.
+ * @wid: A width modifier.
+ * @prec: A precision modifier.
  *
  * Return: The number of bytes stored to the buffer.
  */
-unsigned int convert_ubase(buffer_v *output, unsigned long int num, char *base,
+unsigned int ubase_converter(buffer_v *output,
+		unsigned long int num, char *base,
 		unsigned char flags, int wid, int prec)
 {
 	unsigned int size, ret = 1;
@@ -71,30 +72,29 @@ unsigned int convert_ubase(buffer_v *output, unsigned long int num, char *base,
 		size++;
 
 	if (num >= size)
-		ret += convert_ubase(output, num / size, base, flags, wid - 1, prec - 1);
+		ret += ubase_converter(output, num / size, base,
+				flags, wid - 1, prec - 1);
 
 	else
 	{
-		if (((flags >> 5) & 1) == 1)
+		if (((flags >> 5) & 1) == 1) /* Printing a ptr address */
 		{
 			wid -= 2;
 			prec -= 2;
 		}
-		for (; prec > 1; prec--, wid--)
+		for (; prec > 1; prec--, wid--) /* Handle precision */
 			ret += _memcpy(output, &pad, 1);
 
-		if (NEG_FLAG == 0)
+		if (F_NEG == 0) /* Handle width */
 		{
-			pad = (ZERO_FLAG == 1) ? '0' : ' ';
-				for (; wid > 1; wid--)
-					ret += _memcpy(output, &pad, 1);
+			pad = (F_ZERO == 1) ? '0' : ' ';
+			for (; wid > 1; wid--)
+				ret += _memcpy(output, &pad, 1);
 		}
-		if (((flags >> 5) & 1) == 1)
+		if (((flags >> 5) & 1) == 1) /* Print 0x for ptr address */
 			ret += _memcpy(output, lead, 2);
 	}
-
 	digit = base[(num % size)];
 	_memcpy(output, &digit, 1);
-
 	return (ret);
 }

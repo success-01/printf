@@ -44,7 +44,7 @@ typedef struct buffer_u
 typedef struct convert_u
 {
 	unsigned char specifier;
-	unsigned int (*h)(va_list, buffer_v *,
+	unsigned int (*f)(va_list, buffer_v *,
 			unsigned char, int, int, unsigned char);
 } converter_u;
 

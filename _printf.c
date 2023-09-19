@@ -1,17 +1,17 @@
 #include "main.h"
 
-void clearing(va_list args, buffer_v *output);
-int running_printf(const char *format, va_list args, buffer_v *output);
+void clearing(va_list ap, buffer_v *output);
+int running_printf(const char *format, va_list ap, buffer_v *output);
 int _printf(const char *format, ...);
 
 /**
  * clearing - Clears operations for _printf.
- * @args: A va_list of arguments provided to _printf.
- * @output: A buffer_t struct.
+ * @ap: A va_list of arguments provided to _printf.
+ * @output: A buffer_v struct.
  */
-void clearing(va_list args, buffer_v *output)
+void clearing(va_list ap, buffer_v *output)
 {
-	va_end(args);
+	va_end(ap);
 	write(1, output->start, output->len);
 	bufferfree(output);
 }
@@ -19,17 +19,17 @@ void clearing(va_list args, buffer_v *output)
 /**
  * running_printf - Reads the string format for _printf.
  * @format: Character string to print (may contain directives).
- * @output: A buffer_t struct with a buffer.
- * @args: A va_list of arguments.
+ * @output:  buffer_v struct with a buffer.
+ * @ap: A va_list of arguments.
  *
  * Return: Amount of characters stored to output.
  */
-int running_printf(const char *format, va_list args, buffer_v *output)
+int running_printf(const char *format, va_list ap, buffer_v *output)
 {
 	int x, wid, prec, ret = 0;
 	char tmp;
 	unsigned char flags, len;
-	unsigned int (*h)(va_list, buffer_v *,
+	unsigned int (*f)(va_list, buffer_v *,
 			unsigned char, int, int, unsigned char);
 
 	for (x = 0; *(format + x); x++)
@@ -39,15 +39,14 @@ int running_printf(const char *format, va_list args, buffer_v *output)
 		{
 			tmp = 0;
 			flags = flags_handler(format + x + 1, &tmp);
-			wid = width_handler(args, format + x + tmp + 1, &tmp);
-			prec = precision_handler(args, format + x + tmp + 1,
-					&tmp);
+			wid = width_handler(ap, format + x + tmp + 1, &tmp);
+			prec = precision_handler(ap, format + x + tmp + 1,&tmp);
 			len = length_handler(format + x + tmp + 1, &tmp);
-			h = *handle_specifiers(format + x + tmp + 1);
-			if (h != NULL)
+			f = *handle_specifiers(format + x + tmp + 1);
+			if (f != NULL)
 			{
 				x += tmp + 1;
-				ret += h(args, output, flags, wid, prec, len);
+				ret += f(ap, output, flags, wid, prec, len);
 				continue;
 			}
 			else if (*(format + x + tmp + 1) == '\0')
@@ -59,7 +58,7 @@ int running_printf(const char *format, va_list args, buffer_v *output)
 		ret += _memcpy(output, (format + x), 1);
 		x += (len != 0) ? 1 : 0;
 	}
-	clearing(args, output);
+	clearing(ap, output);
 	return (ret);
 }
 
@@ -72,7 +71,7 @@ int running_printf(const char *format, va_list args, buffer_v *output)
 int _printf(const char *format, ...)
 {
 	buffer_v *output;
-	va_list args;
+	va_list ap;
 	int ret;
 
 	if (format == NULL)
@@ -81,8 +80,7 @@ int _printf(const char *format, ...)
 
 	if (output == NULL)
 		return (-1);
-	va_start(args, format);
-	ret = running_printf(format, args, output);
+	va_start(ap, format);
+	ret = running_printf(format, ap, output);
 	return (ret);
 }
-

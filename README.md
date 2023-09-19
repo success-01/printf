@@ -1,5 +1,5 @@
 #0x11. C - printf
-This is a  collaboration project between Ann and Xaba.
+This is a  collaboration project between Ann and Mpumi.
 We are learning about;
 Pair Programming - How To
 Flowcharts

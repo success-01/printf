@@ -13,8 +13,6 @@ The \fBprintf()\fR function is a standard library function used for formatted ou
 When successful , \fB_printf()\fR returns the number of letters and number printed by the user.If an error is encountered -1 is returned instead.
 .in
 
-.B USAGE 
-
 .B FORMAT FOR FORMAT STRING
 .in +2n
 A format string is a constant character strimg made up  of zero or more 
@@ -141,3 +139,30 @@ Identical to the \fBs\fR conversion specifier, except each character of the arra
 Address of  argument is written. The address is written in hexadecimal
 .in
 .RE
+
+.SH EXAMPLE
+Print the name and barcode of a package with Bhathu  shoes and Martins with the size
+
+#include "main.h"
+
+int main (void)
+{
+        char *shoes = "Bhathu";
+        int *size = 7;
+        int *barcode = 02598756456418;
+        char *shirt = Martins;
+
+        printf("%s, %d, %d, %s\n, shoes, size, barcode, shirt);
+
+        return(0);
+}
+
+.SH SEE ALSO
+printf(3)
+This man page borrows from the corresponding Linux man page printf(3).
+
+.SH BUGS
+No known bugs.
+
+.SH AUTHOR
+NOMPUMELELO XABA AND ANN W WAWERU

@@ -60,14 +60,32 @@ typedef struct flag_u
 } flag_v;
 
 int _printf(const char *format, ...);
+<<<<<<< HEAD
 
 	/* Conversion Specifier Functions */
 	unsigned int convert_c(va_list args, buffer_v *output,
 			unsigned char flags, int wid, int prec, unsigned char len);
 	unsigned int convert_s(va_list args, buffer_v *output,
+=======
+	/* Conversion Specifier Function */
+	unsigned int c_convert(va_list args, buffer_v *output, unsigned char flags,
+			int wid, int prec, unsigned char len);
+	unsigned int b_convert(va_list ap, buffer_v *output, unsigned char flags,
+			int wid, int prec, unsigned char len);
+	unsigned int di_convert(va_list ap, buffer_v *output,
+			unsigned char flags, int wid, int prec, unsigned char len);
+	unsigned int o_convert(va_list ap, buffer_v *output, unsigned char flags,
+			int wid, int prec, unsigned char len);
+	unsigned int s_convert(va_list args, buffer_v *output, unsigned char flags,
+			int wid, int prec, unsigned char len);
+	unsigned int p_convert(va_list args, buffer_v *output, unsigned char flags,
+			int wid, int prec, unsigned char len);
+	unsigned int percent_convert(va_list args, buffer_v *output,
+>>>>>>> b2854aed51c2cb7d261595a275b6eb65ebfe2828
 			unsigned char flags, int wid, int prec, unsigned char len);
 	unsigned int convert_di(va_list args, buffer_v *output,
 			unsigned char flags, int wid, int prec, unsigned char len);
+<<<<<<< HEAD
 	unsigned int convert_percent(va_list args, buffer_v *output,
 			unsigned char flags, int wid, int prec, unsigned char len);
 	unsigned int convert_b(va_list args, buffer_v *output,
@@ -87,6 +105,9 @@ int _printf(const char *format, ...);
 	unsigned int convert_r(va_list args, buffer_v *output,
 			unsigned char flags, int wid, int prec, unsigned char len);
 	unsigned int convert_R(va_list args, buffer_v *output,
+=======
+	unsigned int u_convert(va_list ap, buffer_v *output,
+>>>>>>> b2854aed51c2cb7d261595a275b6eb65ebfe2828
 			unsigned char flags, int wid, int prec, unsigned char len);
 
 	/* Handlers */

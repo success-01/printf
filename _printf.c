@@ -43,7 +43,6 @@ int running_printf(const char *format, va_list args, buffer_v *output)
 			prec = precision_handler(args, format + x + tmp + 1,
 					&tmp);
 			len = length_handler(format + x + tmp + 1, &tmp);
-
 			h = *handle_specifiers(format + x + tmp + 1);
 			if (h != NULL)
 			{
@@ -79,12 +78,11 @@ int _printf(const char *format, ...)
 	if (format == NULL)
 		return (-1);
 	output = init_buffer();
+
 	if (output == NULL)
 		return (-1);
-
 	va_start(args, format);
-
 	ret = running_printf(format, args, output);
-
 	return (ret);
 }
+

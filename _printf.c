@@ -29,7 +29,7 @@ int running_printf(const char *format, va_list args, buffer_v *output)
 	int x, wid, prec, ret = 0;
 	char tmp;
 	unsigned char flags, len;
-	unsigned int (*h)(va_list, buffer_v *,
+	unsigned int (*func)(va_list, buffer_v *,
 			unsigned char, int, int, unsigned char);
 
 	for (x = 0; *(format + x); x++)

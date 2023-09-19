@@ -3,32 +3,34 @@
 void clearing(va_list args, buffer_v *output);
 int running_printf(const char *format, va_list args, buffer_v *output);
 int _printf(const char *format, ...);
+
 /**
- * clearing - Clears unwanted data for _printf.
- * @arg: Va_list of arguments for _printf.
- * @output: buffer_v struct.
+ * clearing - Clears operations for _printf.
+ * @args: A va_list of arguments provided to _printf.
+ * @output: A buffer_t struct.
  */
-void clearing(va_list arg, buffer_v *output)
+void clearing(va_list args, buffer_v *output)
 {
-	va_end(arg);
+	va_end(args);
 	write(1, output->start, output->len);
-	free_buffer(output);
+	bufferfree(output);
 }
 
 /**
- * running _printf -Reads _printf string format output.
- * @format: Prints character string (may have directives).
- * @output: buffer_v struct with a buffer.
- * @arg: arguments for va_list.
+ * running_printf - Reads the string format for _printf.
+ * @format: Character string to print (may contain directives).
+ * @output: A buffer_t struct with a buffer.
+ * @args: A va_list of arguments.
+ *
  * Return: Amount of characters stored to output.
  */
-int running_printf(const char *format, va_list arg, buffer_v *output)
+int running_printf(const char *format, va_list args, buffer_v *output)
 {
 	int x, wid, prec, ret = 0;
 	char tmp;
 	unsigned char flags, len;
-	unsigned int (*f)(va_list, buffer_v *, unsigned char, int, int, unsigned char);
-	ret =
+	unsigned int (*h)(va_list, buffer_v *,
+			unsigned char, int, int, unsigned char);
 
 	for (x = 0; *(format + x); x++)
 	{
@@ -37,50 +39,52 @@ int running_printf(const char *format, va_list arg, buffer_v *output)
 		{
 			tmp = 0;
 			flags = flags_handler(format + x + 1, &tmp);
-			prec = precision_handler(arg, format + x + tmp + 1, &tmp);
-			wid = width_handler(arg, format + x + tmp + 1, &tmp);
-			h = specifiers_handler(format + x + tmp + 1);
-		len = length_handler(format + x + tmp + 1, &tmp);
-	if (h != NULL)
-	{
-	x += tmp + 1;
-ret += h(arg, output, flags, wid, prec, len);
-continue;
-	}
-	else if (*(format + x + tmp + 1) == '\0')
-	{
-		ret = -1;
-		break;
-	}
+			wid = width_handler(args, format + x + tmp + 1, &tmp);
+			prec = precision_handler(args, format + x + tmp + 1,
+					&tmp);
+			len = length_handler(format + x + tmp + 1, &tmp);
+
+			h = *handle_specifiers(format + x + tmp + 1);
+			if (h != NULL)
+			{
+				x += tmp + 1;
+				ret += h(args, output, flags, wid, prec, len);
+				continue;
+			}
+			else if (*(format + x + tmp + 1) == '\0')
+			{
+				ret = -1;
+				break;
+			}
 		}
-		ret += memcpy(output, (format + x), 1);
+		ret += _memcpy(output, (format + x), 1);
 		x += (len != 0) ? 1 : 0;
 	}
-	clearing(arg, output);
+	clearing(args, output);
 	return (ret);
 }
-/**
- * _printf - Formatted string output
- * @format:String character to be printed (may contain directives)
- *
- * Return: Amount of characters to be printed
- */
 
+/**
+ * _printf - Outputs formatted strings.
+ * @format: Character string to printed (may contain directives).
+ *
+ * Return: The number of characters printed.
+ */
 int _printf(const char *format, ...)
 {
 	buffer_v *output;
-	va_list arg;
+	va_list args;
 	int ret;
 
 	if (format == NULL)
 		return (-1);
-	output = buffer_init();
+	output = init_buffer();
 	if (output == NULL)
 		return (-1);
 
-	va_start(arg, format);
+	va_start(args, format);
 
-	ret = running_printf(format, arg, output);
+	ret = running_printf(format, args, output);
 
 	return (ret);
 }

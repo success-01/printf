@@ -27,7 +27,7 @@
  * struct buffer_u - Type defining a buffer struct.
  * @buffer: Pointer to a character array.
  * @start: Pointer to the start of buffer.
- * @len: length of the string stored in buffer.
+ * @len: length of string stored in buffer.
  */
 typedef struct buffer_u
 {

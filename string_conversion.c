@@ -14,9 +14,9 @@ unsigned int convert_R(va_list ap, buffer_v *output,
  *             stores it to a buffer contained in a struct.
  * @ap: va_list pointing to the argument to be converted.
  * @flags: Flag modifiers.
- * @wid: A width modifier.
- * @prec: A precision modifier.
- * @len: A length modifier.
+ * @wid:the width modifier.
+ * @prec:the precision modifier.
+ * @len: the length modifier.
  * @output: A buffer_v struct containing a character array.
  *
  * Return: The number of bytes stored to the buffer.
@@ -31,7 +31,7 @@ unsigned int convert_s(va_list ap, buffer_v *output,
 	(void)flags;
 	(void)len;
 
-	str = va_ap(ap, char *);
+	str = va_arg(ap, char *);
 	if (str == NULL)
 		return (_memcpy(output, null, 6));
 
@@ -76,7 +76,7 @@ unsigned int convert_S(va_list ap, buffer_t *output,
 	unsigned int ret = 0;
 
 	(void)len;
-	str = va_ap(ap, char *);
+	str = va_arg(ap, char *);
 	if (str == NULL)
 		return (_memcpy(output, null, 6));
 
@@ -127,7 +127,7 @@ unsigned int convert_r(va_list ap, buffer_v *output,
 	(void)flags;
 	(void)len;
 
-	str = va_ap(ap, char *);
+	str = va_arg(ap, char *);
 	if (str == NULL)
 		return (_memcpy(output, null, 6));
 
@@ -161,7 +161,7 @@ unsigned int convert_r(va_list ap, buffer_v *output,
  *
  * Return: The number of bytes stored to the buffer.
  */
-unsigned int convert_R(va_list ap, buffer_t *output,
+unsigned int convert_R(va_list ap, buffer_v *output,
 		unsigned char flags, int wid, int prec, unsigned char len)
 {
 	char *alpha = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -173,7 +173,7 @@ unsigned int convert_R(va_list ap, buffer_t *output,
 	(void)flags;
 	(void)len;
 
-	str = va_ap(ap, char *);
+	str = va_arg(ap, char *);
 	if (str == NULL)
 		return (_memcpy(output, null, 6));
 

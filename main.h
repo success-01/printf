@@ -49,7 +49,7 @@ typedef struct converter_s
 } converter_t;
 
 /**
- * struct flag_u - New type defining a flags struct.
+ * struct flag_u - A new type defining a flags struct.
  * @flag: Character representing a flag.
  * @value: Integer value of the flag.
  */

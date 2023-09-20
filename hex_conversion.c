@@ -45,7 +45,7 @@ unsigned char flags, int wid, int prec, unsigned char len)
 
 /**
  * convert_X – It converts an unsigned int argument to hex using ABCDEF
- *             and stores it to a buffer contained in a struct.
+ *             and stores in to a buffer contained in a struct.
  * @ap: va_list pointing to the argument to be converted.
  * @flags: Flag modifiers.
  * @wid: width modifier.

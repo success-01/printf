@@ -11,7 +11,7 @@ unsigned int convert_o(va_list ap, buffer_v *output,
 
 /**
  * convert_di - It converts an argument to a signed int and
- *              stores it to a buffer contained in a struct.
+ *              stores it in a buffer contained in a struct.
  * @ap: A va_list pointing to the argument to be converted.
  * @flags: Flag modifiers.
  * @wid: A width modifier.

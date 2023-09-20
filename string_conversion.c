@@ -54,21 +54,21 @@ unsigned int convert_s(va_list ap, buffer_v *output,
 }
 
 /**
- * convert_S - It converts an argument to a string and
- *             stores it to a buffer contained in a struct.
+ * convert_S - It converts an arg to a string and
+ *             keeps it to a buffer contained in a struct.
  * @ap: A va_list pointing to the argument to be converted.
- * @flags: Flag modifiers.
- * @wid: A width modifier.
- * @prec: A precision modifier.
- * @len: A length modifier.
- * @output: A buffer_t struct containing a character array.
+ * @flags:the flag modifiers.
+ * @wid: width modifier.
+ * @prec: precision modifier.
+ * @len:length modifier.
+ * @output: A buffer_v struct containing a character array.
  *
  * Return: The number of bytes stored to the buffer.
  *
  * Description: Non-printable characteres (ASCII values < 32 or >= 127)
- *              are stored as \x followed by the ASCII code value in hex.
+ *              are saved as \x followed by the ASCII code value in hex.
  */
-unsigned int convert_S(va_list ap, buffer_t *output,
+unsigned int convert_S(va_list ap, buffer_v *output,
 		unsigned char flags, int wid, int prec, unsigned char len)
 {
 	char *str, *null = "(null)", *hex = "\\x", zero = '0';
@@ -93,7 +93,7 @@ unsigned int convert_S(va_list ap, buffer_t *output,
 			ret += _memcpy(output, hex, 2);
 			if (*(str + index) < 16)
 				ret += _memcpy(output, &zero, 1);
-			ret += convert_ubase(output, *(str + index),
+			ret += ubase_converter(output, *(str + index),
 					     "0123456789ABCDEF", flags, 0, 0);
 			continue;
 		}
@@ -183,7 +183,7 @@ unsigned int convert_R(va_list ap, buffer_v *output,
 	ret += print_string_width(output, flags, wid, prec, size);
 
 	prec = (prec == -1) ? size : prec;
-	for (x = 0; *(str + x) != '\0' && x < prec; i++)
+	for (x = 0; *(str + x) != '\0' && x < prec; x++)
 	{
 		for (y = 0; y < 52; y++)
 		{

@@ -17,7 +17,7 @@ void clearing(va_list ap, buffer_v *output)
 }
 
 /**
- * running_printf - Reads the string format for _printf.
+ * running_printf - It reads the string format for _printf.
  * @format: Character string to print (may contain directives).
  * @output: A buffer_v struct with a buffer.
  * @ap: A va_list of arguments.

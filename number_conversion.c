@@ -36,7 +36,7 @@ unsigned int convert_di(va_list ap, buffer_v *output,
 		m = (short)m;
 
 	/* Handle space flag */
-	if (SPACE_FLAG == 1 && m >= 0)
+	if (F_SPACE == 1 && m >= 0)
 		ret += _memcpy(output, &space, 1);
 
 	if (prec <= 0 && F_NEG == 0) /* Handle width  */
@@ -51,10 +51,10 @@ unsigned int convert_di(va_list ap, buffer_v *output,
 		count += (m == 0) ? 1 : 0;
 		count += (m < 0) ? 1 : 0;
 		count += (F_PLUS == 1 && m >= 0) ? 1 : 0;
-		count += (SPACE_FLAG == 1 && m >= 0) ? 1 : 0;
+		count += (F_SPACE == 1 && m >= 0) ? 1 : 0;
 
 		/* Handle plus flag when zero flag is active */
-		if (F_ZERO == 1 && PLUS_FLAG == 1 && m >= 0)
+		if (F_ZERO == 1 && F_PLUS == 1 && m >= 0)
 			ret += _memcpy(output, &plus, 1);
 		/*Print negative sign when zero flag is active */
 		if (F_ZERO == 1 && m < 0)
@@ -69,7 +69,7 @@ unsigned int convert_di(va_list ap, buffer_v *output,
 	if (F_ZERO == 0 && m < 0)
 		ret += _memcpy(output, &neg, 1);
 	/* Handle plus flag when zero flag is not active */
-	if (F_ZERO == 0 && (PLUS_FLAG == 1 && m >= 0))
+	if (F_ZERO == 0 && (F_PLUS == 1 && m >= 0))
 		ret += _memcpy(output, &plus, 1);
 
 	if (!(m == 0 && prec == 0))
@@ -131,7 +131,7 @@ unsigned int convert_o(va_list ap, buffer_v *output,
 	if (len == SHORT)
 		num = (unsigned short)num;
 
-	if (HASH_FLAG == 1 && num != 0)
+	if (F_HASH == 1 && num != 0)
 		ret += _memcpy(output, &zero, 1);
 
 	if (!(num == 0 && prec == 0))
@@ -162,9 +162,9 @@ unsigned int convert_u(va_list ap, buffer_v *output,
 	unsigned int ret = 0;
 
 	if (len == LONG)
-		num = va_ap(ap, unsigned long int);
+		num = va_arg(ap, unsigned long int);
 	else
-		num = va_ap(ap, unsigned int);
+		num = va_arg(ap, unsigned int);
 	if (len == SHORT)
 		num = (unsigned short)num;
 

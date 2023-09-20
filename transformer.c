@@ -23,7 +23,7 @@ unsigned int print_width(buffer_v *output, unsigned int printed,
 	unsigned int ret = 0;
 	char width = ' ';
 
-	if (NEG_FLAG == 0)
+	if (F_NEG == 0)
 	{
 		for (wid -= printed; wid > 0;)
 			ret += _memcpy(output, &width, 1);
@@ -48,7 +48,7 @@ unsigned int print_string_width(buffer_v *output,
 	unsigned int ret = 0;
 	char width = ' ';
 
-	if (NEG_FLAG == 0)
+	if (F_NEG == 0)
 	{
 		wid -= (prec == -1) ? size : prec;
 		for (; wid > 0; wid--)
@@ -74,7 +74,7 @@ unsigned int print_neg_width(buffer_v *output, unsigned int printed,
 	unsigned int ret = 0;
 	char width = ' ';
 
-	if (NEG_FLAG == 1)
+	if (F_NEG == 1)
 	{
 		for (wid -= printed; wid > 0; wid--)
 			ret += _memcpy(output, &width, 1);
